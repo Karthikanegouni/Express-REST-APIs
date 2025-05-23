@@ -34,9 +34,9 @@ app.get("/players/", async (request, response) => {
             FROM 
             player_details;`;
     const dbResponse = await db.all(getPlayersQuery);
-    response.send(dbResponse);
+    response.status(200).json(dbResponse);
   } catch (e) {
-    response.send(e.message);
+    response.status(500).json({ error: e.message });
   }
 });
 
@@ -53,9 +53,9 @@ app.get("/players/:playerId/", async (request, response) => {
             WHERE
                 player_id = ?;`;
     const dbResponse = await db.get(getPlayerQuery, [playerId]);
-    response.send(dbResponse);
+    response.status(200).json(dbResponse);
   } catch (e) {
-    response.send(e.message);
+    response.status(500).json({ error: e.message });
   }
 });
 
@@ -71,13 +71,10 @@ app.put("/players/:playerId/", async (request, response) => {
                 player_name = ?
             WHERE
                 player_id = ?;`;
-    const dbResponse = await db.run(updatePlayerDetailsQuery, [
-      playerName,
-      playerId,
-    ]);
-    response.send("Player Details Updated");
+    await db.run(updatePlayerDetailsQuery, [playerName, playerId]);
+    response.status(200).json({ message: "Player Details Updated" });
   } catch (e) {
-    response.send(e.message);
+    response.status(500).json({ error: e.message });
   }
 });
 
@@ -95,9 +92,9 @@ app.get("/matches/:matchId", async (request, response) => {
             WHERE
                 match_id = ?;`;
     const dbResponse = await db.get(getMatchDetailsQuery, [matchId]);
-    response.send(dbResponse);
+    response.status(200).json(dbResponse);
   } catch (e) {
-    response.send(e.message);
+    response.status(500).json({ error: e.message });
   }
 });
 
@@ -119,9 +116,9 @@ app.get("/players/:playerId/matches", async (request, response) => {
                 WHERE
                     pms.player_id = ?;`;
     const dbResponse = await db.all(getMatchesOfPlayer, [playerId]);
-    response.send(dbResponse);
+    response.status(200).json(dbResponse);
   } catch (e) {
-    response.send(e.message);
+    response.status(500).json({ error: e.message });
   }
 });
 
@@ -142,9 +139,9 @@ app.get("/matches/:matchId/players/", async (request, response) => {
             WHERE
                 pms.match_id = ?;`;
     const dbResponse = await db.all(getPlayersOfMacthQuery, [matchId]);
-    response.send(dbResponse);
+    response.status(200).json(dbResponse);
   } catch (e) {
-    response.send(e.message);
+    response.status(500).json({ error: e.message });
   }
 });
 
@@ -168,9 +165,9 @@ app.get("/players/:playerId/playerScores/", async (request, response) => {
             WHERE
                 pms.player_id = ?;`;
     const dbResponse = await db.get(getPlayerStats, [playerId]);
-    response.send(dbResponse);
+    response.status(200).json(dbResponse);
   } catch (e) {
-    response.send(e.message);
+    response.status(500).json({ error: e.message });
   }
 });
 
