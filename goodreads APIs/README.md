@@ -6,17 +6,17 @@ This project is a simple RESTful API built with Node.js and Express to manage a 
 
 ## Features
 
-* Get a list of all books in the collection.
-* Retrieve details of a specific book by its ID.
-* Add a new book to the collection.
-* Update the details of an existing book.
-* Delete a book from the collection.
+- Get a list of all books in the collection.
+- Retrieve details of a specific book by its ID.
+- Add a new book to the collection.
+- Update the details of an existing book.
+- Delete a book from the collection.
 
 ## Technologies Used
 
-* Node.js
-* Express.js
-* SQLite (via `sqlite` and `sqlite3` packages)
+- Node.js
+- Express.js
+- SQLite (via `sqlite` and `sqlite3` packages)
 
 ## Setup
 
@@ -36,7 +36,9 @@ To set up and run this project locally, follow these steps:
     ```bash
     npm install express sqlite sqlite3
     ```
+
     or if you use yarn:
+
     ```bash
     yarn add express sqlite sqlite3
     ```
@@ -46,14 +48,22 @@ To set up and run this project locally, follow these steps:
     Inside `goodreads.db`, you need a table named `book` with the following schema:
 
     ```sql
-    CREATE TABLE book (
-        book_id INTEGER PRIMARY KEY AUTOINCREMENT,
-        title VARCHAR(255),
-        author VARCHAR(255),
-        rating INTEGER
-    );
+        CREATE TABLE book (
+            book_id INTEGER PRIMARY KEY AUTOINCREMENT,
+            title TEXT,
+            author_id INTEGER,
+            rating REAL,
+            rating_count INTEGER,
+            review_count INTEGER,
+            description TEXT,
+            pages INTEGER,
+            date_of_publication TEXT,
+            edition_language TEXT,
+            price INTEGER,
+            online_stores TEXT
+         );
     ```
-    You can use the `sqlite3` command-line tool or a graphical SQLite database browser to create the database file and the `book` table with the specified columns.
+        You can use the `sqlite3` command-line tool or a graphical SQLite database browser to create the database file and the `book` table with the specified columns.
 
 ## API Endpoints
 
@@ -61,13 +71,13 @@ The API runs on `http://localhost:3000`.
 
 Here are the available endpoints:
 
-| Method | Endpoint         | Description               | Request Body Example (for POST/PUT)                     |
-| :----- | :--------------- | :------------------------ | :------------------------------------------------------ |
-| `GET`  | `/books`         | Get all books             | None                                                    |
-| `GET`  | `/books/:bookId` | Get a book by ID          | None                                                    |
-| `POST` | `/books`         | Add a new book            | `{ "title": "The Hitchhiker's Guide to the Galaxy", "author": "Douglas Adams", "rating": 5 }` |
-| `PUT`  | `/books/:bookId` | Update book details by ID | `{ "title": "Updated Title", "author": "Updated Author", "rating": 4 }` |
-| `DELETE`| `/books/:bookId` | Delete a book by ID       | None                                                    |
+| Method   | Endpoint         | Description               | Request Body Example (for POST/PUT)                                                           |
+| :------- | :--------------- | :------------------------ | :-------------------------------------------------------------------------------------------- |
+| `GET`    | `/books`         | Get all books             | None                                                                                          |
+| `GET`    | `/books/:bookId` | Get a book by ID          | None                                                                                          |
+| `POST`   | `/books`         | Add a new book            | `{ "title": "The Hitchhiker's Guide to the Galaxy", "author": "Douglas Adams", "rating": 5 }` |
+| `PUT`    | `/books/:bookId` | Update book details by ID | `{ "title": "Updated Title", "author": "Updated Author", "rating": 4 }`                       |
+| `DELETE` | `/books/:bookId` | Delete a book by ID       | None                                                                                          |
 
 ## Running the Application
 
@@ -76,4 +86,5 @@ To start the server, navigate to the project's root directory in your terminal a
 ```bash
 node index.js
 ```
->The server will start and listen on http://localhost:3000. You can then use tools like Postman, Insomnia, or curl to test the API endpoints.
+
+> The server will start and listen on http://localhost:3000. You can then use tools like Postman, Insomnia, or curl to test the API endpoints.
