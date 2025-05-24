@@ -5,6 +5,7 @@ app.use(express.json());
 const { open } = require("sqlite");
 const sqlite3 = require("sqlite3");
 const path = require("path");
+const { off } = require("process");
 
 let db = null;
 
@@ -29,8 +30,28 @@ initializeDbAndServer();
 // Get all books
 app.get("/books", async (request, response) => {
   try {
-    const getQuery = `SELECT * FROM book`;
-    const dbResponse = await db.all(getQuery);
+    const {
+      offset = 0,
+      limit = 10,
+      order = "ASC",
+      order_by = "book_id",
+      search_q = "",
+    } = request.query;
+    const getQuery = `
+      SELECT 
+        * 
+      FROM
+        book 
+      WHERE 
+        title LIKE ?
+      ORDER BY ${order_by} ${order}
+      LIMIT ?
+      OFFSET ?`;
+    const dbResponse = await db.all(getQuery, [
+      `%${search_q}%`,
+      parseInt(limit),
+      parseInt(offset),
+    ]);
     response.status(200).json({ success: true, data: dbResponse });
   } catch (error) {
     console.error("Error fetching books:", error.message);
