@@ -3,3 +3,5 @@ node_modules/
 
 # Ignore SQLite database files
 *.db
+
+*.http
