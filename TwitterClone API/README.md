@@ -156,5 +156,5 @@ To start the server, run the following command in the project's root directory (
 
 ```bash
 node app.js
-
+```
 > The server will start and listen on http://localhost:3000. You can then use tools like Postman, Insomnia, or curl to test the API endpoints.
